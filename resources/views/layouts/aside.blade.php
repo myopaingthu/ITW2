@@ -16,9 +16,9 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('users.index') }}" class="nav-link @if (Request::is('users')) active @endif">
+                    <a href="{{ route('candidates.index') }}" class="nav-link @if (Request::is('candidates*')) active @endif">
                         <i class="fas fa-book nav-icon"></i>
-                        <p>User</p>
+                        <p>Candidate</p>
                     </a>
                 </li>
                 <li class="nav-item">

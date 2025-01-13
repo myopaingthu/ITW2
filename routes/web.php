@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -16,7 +18,7 @@ use App\Http\Controllers\Auth\LoginController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('users.index');
+    return redirect()->route('candidates.index');
 });
 
 Route::middleware('guest:web')->group(function () {
@@ -25,7 +27,16 @@ Route::middleware('guest:web')->group(function () {
 });
 
 Route::middleware('auth:web')->group(function () {
-    Route::resource('users', UserController::class);
+    // candidates
+    Route::get('/candidates', [CandidateController::class, 'index'])->name('candidates.index');
+    Route::post('/candidates/update-stage', [CandidateController::class, 'updateStage'])->name('candidates.update.stage');
+    Route::get('/candidates/{id}', [CandidateController::class, 'show'])->name('candidates.show');
+    
+    // email
+    Route::post('/send-email/{candidateId}', [EmailController::class, 'sendEmail'])->name('send.email');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+Route::get('/application-form', [CandidateController::class, 'create']);
+Route::post('/application-form', [CandidateController::class, 'store']);
